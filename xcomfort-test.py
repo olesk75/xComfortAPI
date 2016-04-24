@@ -5,17 +5,16 @@ ini_file = 'xcomfort.ini'
 config_parser = ConfigParser()
 config_parser.read(ini_file)
 try:
-	username = config_parser.get('shc-client', 'username')
-	password = config_parser.get('shc-client', 'password')
-	url = config_parser.get('shc-client', 'url')
-	debug = config_parser.getboolean('shc-client', 'debug', fallback=False)
-	offline = config_parser.getboolean('shc-client', 'offline', fallback=False)
+	username = config_parser.get('API', 'username')
+	password = config_parser.get('API', 'password')
+	url = config_parser.get('API', 'url')
+	verbose = config_parser.getboolean('API', 'verbose', fallback=False)
 except Exception as err:
 	print('Error in ini file' + ini_file + ': ' + str(err))
 	print('Please see xcomfort.ini.example for syntax. Aborting...')
 	exit(1)
 
-my_house = xComfortAPI(url, username, password, verbose=True)  # We get a SHC instance, which contains the session ID
+my_house = xComfortAPI(url, username, password, verbose=verbose)  # We get a SHC instance, which contains the session ID
 
 """
 Here we poll all zones and devices. Still, there is a LOT that can be done through the JSON PRC requests.

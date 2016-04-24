@@ -1,7 +1,6 @@
-# The "shc-client" section is rquired
-[shc-client]
-url = http://your_URL_to_SHC/bcgui/index.html  # Remember to include ":port" at end of URL (before path) if you use another port than 80
-username = my_username
+# The "API" section is required
+[API]
+url = http://your_URL_to_SHC  # Remember to include ":port" at end of URL  if you use another port than 80, for example: http://my_house.dyndns.org:8080
+username = my_username  # Normally "admin"
 password = my_password
-offline = True  # If True, will use saved session from last online session ("soup.html") instead of logging on to server (great for debugging)
-debug = False  # If true, will save .png screenshot of the final page. Might now show values for some reason
+verbose = False  # If set to "True", will give console output to help debugging
