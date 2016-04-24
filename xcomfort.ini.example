@@ -1,0 +1,7 @@
+# The "shc-client" section is rquired
+[shc-client]
+url = http://your_URL_to_SHC/bcgui/index.html  # Remember to include ":port" at end of URL (before path) if you use another port than 80
+username = my_username
+password = my_password
+offline = True  # If True, will use saved session from last online session ("soup.html") instead of logging on to server (great for debugging)
+debug = False  # If true, will save .png screenshot of the final page. Might now show values for some reason
