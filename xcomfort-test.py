@@ -31,12 +31,6 @@ print('Uptime:' + sysinfo['uptime'])
 print('Firmware version:' + sysinfo['shc_version'])
 print('OS version:' + sysinfo['os_version'])
 
-# diagnostics = shc_query(session_ID, url, 'Diagnostics/getAllSystemStates')
-# TODO: fill out
-# Check for pending updates: Settings/getSoftwareStatus and RfFirmware/getFirmwareInfo
-# SHC device info: Settings/getRemoteInfo
-# System status "Diagnostics/getAllSystemStates"
-
 zones = my_house.get_zone_devices()
 my_house.show_zones(zones)
 
