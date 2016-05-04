@@ -10,6 +10,7 @@ radio signal using Eaton's proprietary protocol. Instead it simulates the
 Android/iOS app that is used to control the complete installation through a
 SHC, as the SHC can be controlled through these apps, as well as by logging
 on to the web page of the SHC.
+
 ######Example usage (get and print all zones the SHC knows):
 
 ```python
