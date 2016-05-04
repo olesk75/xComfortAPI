@@ -18,7 +18,6 @@ log on to the SHC web UI from where you run your script, you'll be fine. If
 you can't you need to configure your firewall to allow access to the SHC.
 Explaining how to do this is outside the scope of this little text - Google
 is your friend!
-
 """
 
 import json
@@ -30,7 +29,7 @@ class xComfortAPI:
 		"""
 		Class to access a Smart Home Controller (SHC) via its web API.
 		:param url: the URL of the SHC, for example: http://my_home.dyndns.org:8080
-		:param username: normally "admin" - the user you normally use to log on to the web interface of the SHC
+		:param username: normally "admin" - the user you normally use to log on to the SHC web page
 		:param password: the password for the user
 		"""
 		self.url = url
@@ -75,7 +74,6 @@ class xComfortAPI:
 		Sends query to SHC's JSON RPC interface
 		:param method: the JSON RPC method
 		:param params: parameters for the JSON RPC method (defaults to list of two empty string)
-		:param debug: print debug information
 		:return: dict of response from SHC
 		"""
 		json_url = self.url + '/remote/json-rpc'
@@ -86,7 +84,6 @@ class xComfortAPI:
 			'id': 1
 		}
 		headers = {
-			'Accept': 'application/json',
 			'Cookie': 'JSESSIONID=' + self.session_ID,
 			'Accept-Encoding': 'gzip, deflate',
 			'Content-Type': 'application/json',
@@ -103,9 +100,11 @@ class xComfortAPI:
 
 		if 'result' not in response:
 			response['result'] = [{}]  # In case we have a zone without devices for example
+			if self.verbose:
+				print('-> NO datapoints returned')
 
-		if self.verbose:
-			print('Query returned', len(response['result']), 'datapoints')
+		elif self.verbose:
+			print('->', len(response['result']), 'datapoints returned')
 
 		return response['result']
 
@@ -121,9 +120,11 @@ class xComfortAPI:
 			zone['devices'] = self.query('StatusControlFunction/getDevices', params=[zone['zoneId'], ''])
 		return zone_list
 
-	def show_zones(self, zones):
+	@staticmethod
+	def print_zones(zones):
 		"""
 		Prints all zones and their devices in human readable form
+		Static method
 		:param zones:
 		"""
 		for zone in zones:
@@ -131,4 +132,31 @@ class xComfortAPI:
 			for device in zone['devices']:
 				if 'name' in device:
 					print('\t{:<55}{:>10}{}'.format(device['name'], device['value'], device['unit']))
+
+	def show_diagnostics(self):
+		"""
+		Prints the SHC diagnostics info
+		"""
+		all_diagnostics = self.query('Diagnostics/getAllSystemStates')
+		print('\n### SHC diagnostic information ###')
+		for diagnostics in all_diagnostics:
+			print(diagnostics['statusValue'])
+		print('\n')
+
+	def switch(self, zone, dev_id, state):
+		"""
+		Turns off a device
+		:param dev_id: the SHC ID of the device (like 'xCo:5355820_u0')
+		:param zone: the zone the device is in (like 'hz_1')
+		:param state: 'on', 'off' or '' - if '' it means "switch to other" (on if off, off if on)
+		:return: True if successful, False otherwise
+		"""
+		if not state == 'on' and not state == 'off' and not state == '':
+			print('Error: switch() state must be "on", "off" or "" (blank), not "' + str(state) + '"')
+			exit(1)
+		result = self.query('StatusControlFunction/controlDevice', params=[zone, dev_id, 'off'])
+		if not result['status'] == 'ok':
+			return False
+		else:
+			return True
 

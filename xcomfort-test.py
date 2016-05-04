@@ -26,12 +26,17 @@ To see a complete list of available methods, use the 'system.listMethods' method
 
 # Getting firmware data
 sysinfo = my_house.query('Settings/getSystemInfo')
+my_house.show_diagnostics()
 
 print('Uptime:' + sysinfo['uptime'])
 print('Firmware version:' + sysinfo['shc_version'])
 print('OS version:' + sysinfo['os_version'])
 
 zones = my_house.get_zone_devices()
-my_house.show_zones(zones)
+my_house.print_zones(zones)
+
+# Example of switching a light _off_
+# The light is in zone 'hz_1' with id 'xCo:5355820_u0' (see output from my_house.print_zones(zones) to get zone and ID)
+my_house.switch('hz_1', 'xCo:5355820_u0', 'off')
 
 exit(0)
