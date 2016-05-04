@@ -20,13 +20,15 @@ on to the web page of the SHC.
     my_house = xComfortAPI(url, username, password, verbose=verbose)  # We get a SHC instance, which contains the session ID
   	zones = my_house.get_zone_devices()
 	my_house.show_zones(zones)
+	
+	# We get the zone ("hz_1") and id ("xCo:5355820_u0") above
+	my_house.switch('hz_1', 'xCo:5355820_u0', 'off')  # Switches off living room lights
 ```
 
 ####Current status:
-The xComfort API is active development. It currently reads values fine, but
-I've run into a snag when trying to write them back. The API also needs more
-functions for standard operations, especially for more easily manipulating
-single devices. The good news that the basic functionality works well and is
+The xComfort API is active development. The API needs more functions for 
+standard operations, especially for more easily manipulating single devices. 
+The good news that the basic functionality works well and is
 reasonably robust, so hopefully soon... 
 
 ###FAQ
