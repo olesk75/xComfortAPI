@@ -1,6 +1,7 @@
-# The "API" section is required
-[API]
-url = http://your_URL_to_SHC  # Remember to include ":port" at end of URL  if you use another port than 80, for example: http://my_house.dyndns.org:8080
-username = my_username  # Normally "admin"
-password = my_password
-verbose = False  # If set to "True", will give console output to help debugging
+# The values here must match what has been set up in your SHC. It uses the same username and password.
+
+[API]                           # Python's ConfigParser requires a section header
+url = http://your_URL_to_SHC    # remember to include ":port" at end of URL  if you use another port than 80, for example: http://my_house.dyndns.org:8080
+username = my_username          # normally "admin", configured on the SHC during first setup
+password = my_password          # normally "admin", configured on the SHC during first setup
+verbose = False                 # if set to "True", will give console output to help debugging, default is "False" (capitalization matters!)

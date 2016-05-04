@@ -1,9 +1,11 @@
 from configparser import ConfigParser
 from xComfortAPI import xComfortAPI
 
-ini_file = 'xcomfort.ini'
+# Using configparser to load username/password and URL from INI-file (slightly overkill for this script, but works nicely)
+ini_file = 'xcomfort.ini'  # Copy the example ini-file to xcomfort.ini and substitute your information
 config_parser = ConfigParser()
 config_parser.read(ini_file)
+
 try:
 	username = config_parser.get('API', 'username')
 	password = config_parser.get('API', 'password')
@@ -14,6 +16,7 @@ except Exception as err:
 	print('Please see xcomfort.ini.example for syntax. Aborting...')
 	exit(1)
 
+# We now got URL, username, password and verbosity from INI-file, so we create an instance, my_house(), of the xComfortAPI class
 my_house = xComfortAPI(url, username, password, verbose=verbose)  # We get a SHC instance, which contains the session ID
 
 """

@@ -1,3 +1,26 @@
+"""
+xComfortAPI provides an API to the Eatcon xComfort Smart Home Controller (SHC)
+This allows for reading and setting values in the SHC, which in plain language
+allows you to both check and set all values the SHC knows, which gives you
+control of all your lights/heaters/blinds/alarms/whatever you have installed.
+
+This API does *not* provide any means of directly controlling actuators via
+radio signal using Eaton's proprietary protocol. Instead it simulates the
+Android/iOS app that is used to control the complete installation through a
+SHC, as the SHC can be controlled through these apps, as well as by logging
+on to the web page of the SHC.
+
+IMPORTANT: For the API to be able to control the SHC, it must be available
+on the network (duh!). This means that if you want to connect to the SHC when
+you are not at the same local network as the SHC (from outside your house),
+the SHC must be reachable through your router. Simply put: if you are able to
+log on to the SHC web UI from where you run your script, you'll be fine. If
+you can't you need to configure your firewall to allow access to the SHC.
+Explaining how to do this is outside the scope of this little text - Google
+is your friend!
+
+"""
+
 import json
 import requests
 
@@ -70,7 +93,14 @@ class xComfortAPI:
 			'Accept': 'application/json, text/javascript, */*; q=0.01',
 		}
 
-		response = requests.post(json_url, data=json.dumps(data), headers=headers).json()
+		try:
+			response = requests.post(json_url, data=json.dumps(data), headers=headers).json()
+		except ValueError as err:
+			if err == 'Expecting value: line 1 column 1 (char 0)':
+				print('The SHC gave an invalid response. Most likely, this is due to an incorrect URL in your INI-file')
+				print('Please verify that your URL is of the format "http://IP:port", or just "http://IP" if you use default port 80')
+			exit(1)
+
 		if 'result' not in response:
 			response['result'] = [{}]  # In case we have a zone without devices for example
 
