@@ -26,11 +26,11 @@ The API is written in Python3, but should with small tweaks work with Python2.
 
     from xComfortAPI import xComfortAPI
   
-    my_house = xComfortAPI(url, username, password, verbose=verbose)  # We get a SHC instance, which contains the session ID
+    my_house = xComfortAPI(url, username, password, verbose=True)
   	zones = my_house.get_zone_devices()
 	my_house.show_zones(zones)
 	
-	# We get the zone ("hz_1") and id ("xCo:5355820_u0") above
+	# We get the zone ("hz_1") and device id ("xCo:5355820_u0") above
 	my_house.switch('hz_1', 'xCo:5355820_u0', 'off')  # Switches off living room lights
 ```
 
