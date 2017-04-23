@@ -20,30 +20,30 @@ on to the web page of the SHC.
 
 The API is written in Python3, but should with small tweaks work with Python2.
 
-######Example usage (get and print all zones the SHC knows):
+###### Example usage (get and print all zones the SHC knows):
 
 ```python
 
-    from xComfortAPI import xComfortAPI
+  from xComfortAPI import xComfortAPI
   
-    my_house = xComfortAPI(url, username, password, verbose=True)
-  	zones = my_house.get_zone_devices()
-	my_house.show_zones(zones)
+  my_house = xComfortAPI(url, username, password, verbose=True)
+  zones = my_house.get_zone_devices()
+  my_house.show_zones(zones)
 	
-	# We get the zone ("hz_1") and device id ("xCo:5355820_u0") above
-	my_house.switch('hz_1', 'xCo:5355820_u0', 'off')  # Switches off living room lights
+  # We get the zone ("hz_1") and device id ("xCo:5355820_u0") above
+  my_house.switch('hz_1', 'xCo:5355820_u0', 'off')  # Switches off living room lights
 ```
 
-####Current status:
+#### Current status:
 The xComfort API is active development. The API needs more functions for 
 standard operations, especially for more easily manipulating single devices. 
 The good news that the basic functionality works well and is
 reasonably robust, so hopefully soon... 
 
-###FAQ
-####TODO
+### FAQ
+#### TODO
 
-###Disclaimer
+### Disclaimer
 I AM IN NO WAS ASSOCIATED WITH EATON OR XCOMFORT AND TAKE ABSOLUTELY NO RESPONSIBILITY
 FOR THE RESULTS OF USING THIS API. IF YOUR HOUSE BURNS DOWN AND/OR YOUR CAT GETS 
 ELECTROCUTED, I ACCEPT NO RESPONSIBILITY WHATSOEVER. USE AT OWN RISK! 
